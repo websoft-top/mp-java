@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopGoodsLogMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_goods_log a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.type != null">
+                AND a.type LIKE CONCAT('%', #{param.type}, '%')
+            </if>
+            <if test="param.goodsId != null">
+                AND a.goods_id = #{param.goodsId}
+            </if>
+            <if test="param.visitNum != null">
+                AND a.visit_num = #{param.visitNum}
+            </if>
+            <if test="param.cartNum != null">
+                AND a.cart_num = #{param.cartNum}
+            </if>
+            <if test="param.orderNum != null">
+                AND a.order_num = #{param.orderNum}
+            </if>
+            <if test="param.payNum != null">
+                AND a.pay_num = #{param.payNum}
+            </if>
+            <if test="param.payPrice != null">
+                AND a.pay_price = #{param.payPrice}
+            </if>
+            <if test="param.costPrice != null">
+                AND a.cost_price = #{param.costPrice}
+            </if>
+            <if test="param.payUid != null">
+                AND a.pay_uid = #{param.payUid}
+            </if>
+            <if test="param.refundNum != null">
+                AND a.refund_num = #{param.refundNum}
+            </if>
+            <if test="param.refundPrice != null">
+                AND a.refund_price = #{param.refundPrice}
+            </if>
+            <if test="param.collectNum != null">
+                AND a.collect_num = #{param.collectNum}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopGoodsLog">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopGoodsLog">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

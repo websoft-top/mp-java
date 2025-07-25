@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gxwebsoft.common.system.mapper.MenuMapper">
+
+  <!-- 关联查询sql -->
+  <sql id="selectSql">
+    SELECT a.*
+    FROM sys_menu a
+    <where>
+      <if test="param.menuId != null">
+        AND a.menu_id = #{param.menuId}
+      </if>
+      <if test="param.parentId != null">
+        AND a.parent_id = #{param.parentId}
+      </if>
+      <if test="param.deleted != null">
+        AND a.deleted = #{param.deleted}
+      </if>
+      <if test="param.deleted == null">
+        AND a.deleted = 0
+      </if>
+      <if test="param.tenantId != null">
+        AND a.tenant_id = #{param.tenantId}
+      </if>
+    </where>
+  </sql>
+
+  <select id="getMenuByClone" resultType="com.gxwebsoft.common.system.entity.Menu">
+    <include refid="selectSql"></include>
+  </select>
+
+</mapper>

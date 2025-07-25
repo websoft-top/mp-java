@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsNavigationMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*, b.title as parentName, b.position as parentPosition
+        FROM cms_navigation a
+        LEFT JOIN cms_navigation b ON a.parent_id = b.navigation_id
+        <where>
+            <if test="param.navigationId != null">
+                AND a.navigation_id = #{param.navigationId}
+            </if>
+            <if test="param.parentId != null">
+                AND a.parent_id = #{param.parentId}
+            </if>
+            <if test="param.title != null">
+                AND a.title LIKE CONCAT('%', #{param.title}, '%')
+            </if>
+            <if test="param.model != null">
+                AND a.model LIKE CONCAT('%', #{param.model}, '%')
+            </if>
+            <if test="param.lang != null">
+              AND a.lang = #{param.lang}
+            </if>
+            <if test="param.code != null">
+                AND a.code LIKE CONCAT('%', #{param.code}, '%')
+            </if>
+            <if test="param.path != null">
+                AND a.path LIKE CONCAT('%', #{param.path}, '%')
+            </if>
+            <if test="param.component != null">
+                AND a.component LIKE CONCAT('%', #{param.component}, '%')
+            </if>
+            <if test="param.target != null">
+                AND a.target LIKE CONCAT('%', #{param.target}, '%')
+            </if>
+            <if test="param.icon != null">
+                AND a.icon LIKE CONCAT('%', #{param.icon}, '%')
+            </if>
+            <if test="param.color != null">
+                AND a.color LIKE CONCAT('%', #{param.color}, '%')
+            </if>
+            <if test="param.hide != null">
+                AND a.hide = #{param.hide}
+            </if>
+            <if test="param.permission != null">
+                AND a.permission = #{param.permission}
+            </if>
+            <if test="param.password != null">
+                AND a.password LIKE CONCAT('%', #{param.password}, '%')
+            </if>
+            <if test="param.position != null">
+                AND a.position = #{param.position}
+            </if>
+            <if test="param.top != null">
+                AND a.top = #{param.top}
+            </if>
+            <if test="param.bottom != null">
+                AND a.bottom = #{param.bottom}
+            </if>
+            <if test="param.active != null">
+                AND a.active LIKE CONCAT('%', #{param.active}, '%')
+            </if>
+            <if test="param.meta != null">
+                AND a.meta LIKE CONCAT('%', #{param.meta}, '%')
+            </if>
+            <if test="param.style != null">
+                AND a.style LIKE CONCAT('%', #{param.style}, '%')
+            </if>
+            <if test="param.parentPath != null">
+                AND a.parent_path LIKE CONCAT('%', #{param.parentPath}, '%')
+            </if>
+            <if test="param.parentName != null">
+                AND a.parent_name LIKE CONCAT('%', #{param.parentName}, '%')
+            </if>
+            <if test="param.modelName != null">
+                AND a.model_name LIKE CONCAT('%', #{param.modelName}, '%')
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.pageId != null">
+                AND a.page_id = #{param.pageId}
+            </if>
+            <if test="param.isMpWeixin != null">
+                AND a.is_mp_weixin = #{param.isMpWeixin}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.home != null">
+                AND a.home = #{param.home}
+            </if>
+            <if test="param.recommend != null">
+              AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+              AND (a.path LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.title LIKE CONCAT('%', #{param.keywords}, '%')
+              )
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsNavigation">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsNavigation">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="selectListAllRel" resultType="com.gxwebsoft.cms.entity.CmsNavigation">
+      SELECT a.*,b.user_id as websiteUserId, c.content
+      FROM cms_navigation a
+      LEFT JOIN cms_website b ON a.tenant_id = b.tenant_id
+      LEFT JOIN cms_design c ON a.navigation_id = c.category_id
+      <where>
+        <if test="param.websiteUserId != null">
+          AND b.user_id = #{param.websiteUserId}
+        </if>
+        <if test="param.parentId != null">
+          AND a.parent_id = #{param.parentId}
+        </if>
+        <if test="param.navigationId != null">
+          AND a.navigation_id = #{param.navigationId}
+        </if>
+        <if test="param.deleted != null">
+          AND a.deleted = #{param.deleted}
+        </if>
+        <if test="param.deleted == null">
+          AND a.deleted = 0
+        </if>
+      </where>
+    </select>
+
+</mapper>

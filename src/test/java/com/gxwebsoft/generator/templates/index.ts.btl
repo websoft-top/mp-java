@@ -1,0 +1,106 @@
+import request from '@/utils/request';
+import type { ApiResult, PageResult } from '@/api';
+import type { ${entity}, ${entity}Param } from './model';
+import { MODULES_API_URL } from '@/config/setting';
+
+/**
+ * 分页查询${table.comment!}
+ */
+export async function page${entity}(params: ${entity}Param) {
+  const res = await request.get<ApiResult<PageResult<${entity}>>>(
+    MODULES_API_URL + '/${package.ModuleName}/${controllerMappingHyphen}/page',
+    {
+      params
+    }
+  );
+  if (res.data.code === 0) {
+    return res.data.data;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+/**
+ * 查询${table.comment!}列表
+ */
+export async function list${entity}(params?: ${entity}Param) {
+  const res = await request.get<ApiResult<${entity}[]>>(
+    MODULES_API_URL + '/${package.ModuleName}/${controllerMappingHyphen}',
+    {
+      params
+    }
+  );
+  if (res.data.code === 0 && res.data.data) {
+    return res.data.data;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+/**
+ * 添加${table.comment!}
+ */
+export async function add${entity}(data: ${entity}) {
+  const res = await request.post<ApiResult<unknown>>(
+    MODULES_API_URL + '/${package.ModuleName}/${controllerMappingHyphen}',
+    data
+  );
+  if (res.data.code === 0) {
+    return res.data.message;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+/**
+ * 修改${table.comment!}
+ */
+export async function update${entity}(data: ${entity}) {
+  const res = await request.put<ApiResult<unknown>>(
+    MODULES_API_URL + '/${package.ModuleName}/${controllerMappingHyphen}',
+    data
+  );
+  if (res.data.code === 0) {
+    return res.data.message;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+/**
+ * 删除${table.comment!}
+ */
+export async function remove${entity}(id?: number) {
+  const res = await request.delete<ApiResult<unknown>>(
+    MODULES_API_URL + '/${package.ModuleName}/${controllerMappingHyphen}/' + id
+  );
+  if (res.data.code === 0) {
+    return res.data.message;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+/**
+ * 批量删除${table.comment!}
+ */
+export async function removeBatch${entity}(data: (number | undefined)[]) {
+  const res = await request.delete<ApiResult<unknown>>(
+    MODULES_API_URL + '/${package.ModuleName}/${controllerMappingHyphen}/batch',
+    {
+      data
+    }
+  );
+  if (res.data.code === 0) {
+    return res.data.message;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+/**
+ * 根据id查询${table.comment!}
+ */
+export async function get${entity}(id: number) {
+  const res = await request.get<ApiResult<${entity}>>(
+    MODULES_API_URL + '/${package.ModuleName}/${controllerMappingHyphen}/' + id
+  );
+  if (res.data.code === 0 && res.data.data) {
+    return res.data.data;
+  }
+  return Promise.reject(new Error(res.data.message));
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopSplashMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_splash a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.title != null">
+                AND a.title LIKE CONCAT('%', #{param.title}, '%')
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.jumpType != null">
+                AND a.jump_type LIKE CONCAT('%', #{param.jumpType}, '%')
+            </if>
+            <if test="param.jumpPk != null">
+                AND a.jump_pk = #{param.jumpPk}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopSplash">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopSplash">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopUsersMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_users a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.openId != null">
+                AND a.open_id LIKE CONCAT('%', #{param.openId}, '%')
+            </if>
+            <if test="param.sessionKey != null">
+                AND a.session_key LIKE CONCAT('%', #{param.sessionKey}, '%')
+            </if>
+            <if test="param.username != null">
+                AND a.username LIKE CONCAT('%', #{param.username}, '%')
+            </if>
+            <if test="param.avatarUrl != null">
+                AND a.avatar_url LIKE CONCAT('%', #{param.avatarUrl}, '%')
+            </if>
+            <if test="param.gender != null">
+                AND a.gender = #{param.gender}
+            </if>
+            <if test="param.country != null">
+                AND a.country LIKE CONCAT('%', #{param.country}, '%')
+            </if>
+            <if test="param.province != null">
+                AND a.province LIKE CONCAT('%', #{param.province}, '%')
+            </if>
+            <if test="param.city != null">
+                AND a.city LIKE CONCAT('%', #{param.city}, '%')
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.integral != null">
+                AND a.integral = #{param.integral}
+            </if>
+            <if test="param.money != null">
+                AND a.money = #{param.money}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.idCard != null">
+                AND a.id_card LIKE CONCAT('%', #{param.idCard}, '%')
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.isAdmin != null">
+                AND a.is_admin = #{param.isAdmin}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopUsers">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopUsers">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

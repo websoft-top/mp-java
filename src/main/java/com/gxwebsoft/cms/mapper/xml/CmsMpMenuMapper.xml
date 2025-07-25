@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsMpMenuMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM cms_mp_menu a
+        <where>
+            <if test="param.menuId != null">
+                AND a.menu_id = #{param.menuId}
+            </if>
+            <if test="param.parentId != null">
+                AND a.parent_id = #{param.parentId}
+            </if>
+            <if test="param.title != null">
+                AND a.title LIKE CONCAT('%', #{param.title}, '%')
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.isMpWeixin != null">
+                AND a.is_mp_weixin = #{param.isMpWeixin}
+            </if>
+            <if test="param.path != null">
+                AND a.path LIKE CONCAT('%', #{param.path}, '%')
+            </if>
+            <if test="param.component != null">
+                AND a.component LIKE CONCAT('%', #{param.component}, '%')
+            </if>
+            <if test="param.target != null">
+                AND a.target LIKE CONCAT('%', #{param.target}, '%')
+            </if>
+            <if test="param.avatar != null">
+                AND a.avatar LIKE CONCAT('%', #{param.avatar}, '%')
+            </if>
+            <if test="param.color != null">
+                AND a.color LIKE CONCAT('%', #{param.color}, '%')
+            </if>
+            <if test="param.icon != null">
+                AND a.icon LIKE CONCAT('%', #{param.icon}, '%')
+            </if>
+            <if test="param.hide != null">
+                AND a.hide = #{param.hide}
+            </if>
+            <if test="param.position != null">
+                AND a.position = #{param.position}
+            </if>
+            <if test="param.rows != null">
+                AND a.rows = #{param.rows}
+            </if>
+            <if test="param.active != null">
+                AND a.active LIKE CONCAT('%', #{param.active}, '%')
+            </if>
+            <if test="param.meta != null">
+                AND a.meta LIKE CONCAT('%', #{param.meta}, '%')
+            </if>
+            <if test="param.pageId != null">
+                AND a.page_id = #{param.pageId}
+            </if>
+            <if test="param.articleCategoryId != null">
+                AND a.article_category_id = #{param.articleCategoryId}
+            </if>
+            <if test="param.articleId != null">
+                AND a.article_id = #{param.articleId}
+            </if>
+            <if test="param.formId != null">
+                AND a.form_id = #{param.formId}
+            </if>
+            <if test="param.bookCode != null">
+                AND a.book_code LIKE CONCAT('%', #{param.bookCode}, '%')
+            </if>
+            <if test="param.goodsCategoryId != null">
+                AND a.goods_category_id = #{param.goodsCategoryId}
+            </if>
+            <if test="param.goodsId != null">
+                AND a.goods_id = #{param.goodsId}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.adminShow != null">
+                AND a.admin_show = #{param.adminShow}
+            </if>
+            <if test="param.home != null">
+                AND a.home = #{param.home}
+            </if>
+            <if test="param.groupName != null">
+                AND a.group_name LIKE CONCAT('%', #{param.groupName}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsMpMenu">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsMpMenu">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

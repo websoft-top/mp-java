@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopGoodsCommentMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_goods_comment a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.uid != null">
+                AND a.uid = #{param.uid}
+            </if>
+            <if test="param.oid != null">
+                AND a.oid = #{param.oid}
+            </if>
+            <if test="param.unique != null">
+                AND a.unique LIKE CONCAT('%', #{param.unique}, '%')
+            </if>
+            <if test="param.goodsId != null">
+                AND a.goods_id = #{param.goodsId}
+            </if>
+            <if test="param.replyType != null">
+                AND a.reply_type LIKE CONCAT('%', #{param.replyType}, '%')
+            </if>
+            <if test="param.goodsScore != null">
+                AND a.goods_score = #{param.goodsScore}
+            </if>
+            <if test="param.serviceScore != null">
+                AND a.service_score = #{param.serviceScore}
+            </if>
+            <if test="param.comment != null">
+                AND a.comment LIKE CONCAT('%', #{param.comment}, '%')
+            </if>
+            <if test="param.pics != null">
+                AND a.pics LIKE CONCAT('%', #{param.pics}, '%')
+            </if>
+            <if test="param.merchantReplyContent != null">
+                AND a.merchant_reply_content LIKE CONCAT('%', #{param.merchantReplyContent}, '%')
+            </if>
+            <if test="param.merchantReplyTime != null">
+                AND a.merchant_reply_time = #{param.merchantReplyTime}
+            </if>
+            <if test="param.isDel != null">
+                AND a.is_del = #{param.isDel}
+            </if>
+            <if test="param.isReply != null">
+                AND a.is_reply = #{param.isReply}
+            </if>
+            <if test="param.nickname != null">
+                AND a.nickname LIKE CONCAT('%', #{param.nickname}, '%')
+            </if>
+            <if test="param.avatar != null">
+                AND a.avatar LIKE CONCAT('%', #{param.avatar}, '%')
+            </if>
+            <if test="param.sku != null">
+                AND a.sku LIKE CONCAT('%', #{param.sku}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopGoodsComment">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopGoodsComment">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

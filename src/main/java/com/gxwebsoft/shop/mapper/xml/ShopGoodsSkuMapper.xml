@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopGoodsSkuMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_goods_sku a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.goodsId != null">
+                AND a.goods_id = #{param.goodsId}
+            </if>
+            <if test="param.sku != null">
+                AND a.sku LIKE CONCAT('%', #{param.sku}, '%')
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.salePrice != null">
+                AND a.sale_price = #{param.salePrice}
+            </if>
+            <if test="param.cost != null">
+                AND a.cost = #{param.cost}
+            </if>
+            <if test="param.stock != null">
+                AND a.stock = #{param.stock}
+            </if>
+            <if test="param.skuNo != null">
+                AND a.sku_no LIKE CONCAT('%', #{param.skuNo}, '%')
+            </if>
+            <if test="param.barCode != null">
+                AND a.bar_code LIKE CONCAT('%', #{param.barCode}, '%')
+            </if>
+            <if test="param.weight != null">
+                AND a.weight = #{param.weight}
+            </if>
+            <if test="param.volume != null">
+                AND a.volume = #{param.volume}
+            </if>
+            <if test="param.uuid != null">
+                AND a.uuid LIKE CONCAT('%', #{param.uuid}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopGoodsSku">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopGoodsSku">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopOrderGoodsMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_order_goods a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.orderId != null">
+                AND a.order_id = #{param.orderId}
+            </if>
+            <if test="param.orderCode != null">
+                AND a.order_code LIKE CONCAT('%', #{param.orderCode}, '%')
+            </if>
+            <if test="param.merchantId != null">
+                AND a.merchant_id = #{param.merchantId}
+            </if>
+            <if test="param.merchantName != null">
+                AND a.merchant_name LIKE CONCAT('%', #{param.merchantName}, '%')
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.goodsId != null">
+                AND a.goods_id = #{param.goodsId}
+            </if>
+            <if test="param.goodsName != null">
+                AND a.goods_name LIKE CONCAT('%', #{param.goodsName}, '%')
+            </if>
+            <if test="param.spec != null">
+                AND a.spec LIKE CONCAT('%', #{param.spec}, '%')
+            </if>
+            <if test="param.skuId != null">
+                AND a.sku_id = #{param.skuId}
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.totalNum != null">
+                AND a.total_num = #{param.totalNum}
+            </if>
+            <if test="param.payStatus != null">
+                AND a.pay_status = #{param.payStatus}
+            </if>
+            <if test="param.orderStatus != null">
+                AND a.order_status = #{param.orderStatus}
+            </if>
+            <if test="param.isFree != null">
+                AND a.is_free = #{param.isFree}
+            </if>
+            <if test="param.version != null">
+                AND a.version = #{param.version}
+            </if>
+            <if test="param.timePeriod != null">
+                AND a.time_period LIKE CONCAT('%', #{param.timePeriod}, '%')
+            </if>
+            <if test="param.dateTime != null">
+                AND a.date_time LIKE CONCAT('%', #{param.dateTime}, '%')
+            </if>
+            <if test="param.startTime != null">
+                AND a.start_time LIKE CONCAT('%', #{param.startTime}, '%')
+            </if>
+            <if test="param.endTime != null">
+                AND a.end_time LIKE CONCAT('%', #{param.endTime}, '%')
+            </if>
+            <if test="param.timeFlag != null">
+                AND a.time_flag LIKE CONCAT('%', #{param.timeFlag}, '%')
+            </if>
+            <if test="param.expirationTime != null">
+                AND a.expiration_time LIKE CONCAT('%', #{param.expirationTime}, '%')
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopOrderGoods">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopOrderGoods">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

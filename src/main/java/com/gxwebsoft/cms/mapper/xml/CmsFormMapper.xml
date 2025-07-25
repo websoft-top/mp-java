@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsFormMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM cms_form a
+        <where>
+            <if test="param.formId != null">
+                AND a.form_id = #{param.formId}
+            </if>
+            <if test="param.name != null">
+                AND a.name LIKE CONCAT('%', #{param.name}, '%')
+            </if>
+            <if test="param.photo != null">
+                AND a.photo LIKE CONCAT('%', #{param.photo}, '%')
+            </if>
+            <if test="param.background != null">
+                AND a.background LIKE CONCAT('%', #{param.background}, '%')
+            </if>
+            <if test="param.video != null">
+                AND a.video LIKE CONCAT('%', #{param.video}, '%')
+            </if>
+            <if test="param.submitNumber != null">
+                AND a.submit_number = #{param.submitNumber}
+            </if>
+            <if test="param.layout != null">
+                AND a.layout LIKE CONCAT('%', #{param.layout}, '%')
+            </if>
+            <if test="param.hidePhoto != null">
+                AND a.hide_photo = #{param.hidePhoto}
+            </if>
+            <if test="param.hideBackground != null">
+                AND a.hide_background = #{param.hideBackground}
+            </if>
+            <if test="param.hideVideo != null">
+                AND a.hide_video = #{param.hideVideo}
+            </if>
+            <if test="param.opacity != null">
+                AND a.opacity = #{param.opacity}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.merchantId != null">
+                AND a.merchant_id = #{param.merchantId}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsForm">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsForm">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

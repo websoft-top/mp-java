@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.common.system.mapper.SettingMapper">
+
+  <!-- 关联查询sql -->
+  <sql id="selectSql">
+    SELECT a.*
+    FROM sys_setting a
+    <where>
+      <if test="param.settingKey != null">
+        AND a.setting_key = #{param.settingKey}
+      </if>
+      <if test="param.settingId != null">
+        AND a.setting_id = #{param.settingId}
+      </if>
+      <if test="param.tenantId != null">
+        AND a.tenant_id = #{param.tenantId}
+      </if>
+      <if test="param.deleted != null">
+        AND a.deleted = #{param.deleted}
+      </if>
+      <if test="param.deleted == null">
+        AND a.deleted = 0
+      </if>
+
+    </where>
+  </sql>
+
+  <select id="getBySettingKeyIgnore" resultType="com.gxwebsoft.common.system.entity.Setting">
+    <include refid="selectSql"></include>
+  </select>
+
+</mapper>

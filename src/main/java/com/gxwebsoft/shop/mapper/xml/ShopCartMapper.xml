@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopCartMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_cart a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.code != null">
+                AND a.code LIKE CONCAT('%', #{param.code}, '%')
+            </if>
+            <if test="param.goodsId != null">
+                AND a.goods_id LIKE CONCAT('%', #{param.goodsId}, '%')
+            </if>
+            <if test="param.spec != null">
+                AND a.spec LIKE CONCAT('%', #{param.spec}, '%')
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.cartNum != null">
+                AND a.cart_num = #{param.cartNum}
+            </if>
+            <if test="param.totalPrice != null">
+                AND a.total_price = #{param.totalPrice}
+            </if>
+            <if test="param.isPay != null">
+                AND a.is_pay = #{param.isPay}
+            </if>
+            <if test="param.isNew != null">
+                AND a.is_new = #{param.isNew}
+            </if>
+            <if test="param.isShow != null">
+                AND a.is_show = #{param.isShow}
+            </if>
+            <if test="param.combinationId != null">
+                AND a.combination_id = #{param.combinationId}
+            </if>
+            <if test="param.seckillId != null">
+                AND a.seckill_id = #{param.seckillId}
+            </if>
+            <if test="param.bargainId != null">
+                AND a.bargain_id = #{param.bargainId}
+            </if>
+            <if test="param.selected != null">
+                AND a.selected = #{param.selected}
+            </if>
+            <if test="param.merchantId != null">
+                AND a.merchant_id LIKE CONCAT('%', #{param.merchantId}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id LIKE CONCAT('%', #{param.userId}, '%')
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopCart">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopCart">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

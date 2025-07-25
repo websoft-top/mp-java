@@ -1,0 +1,38 @@
+# 开发环境配置
+
+# 数据源配置
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/modules?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# 日志配置
+logging:
+  level:
+    com.gxwebsoft: DEBUG
+    com.baomidou.mybatisplus: DEBUG
+
+socketio:
+  host: ${SOCKETIO_HOST:localhost} #IP地址
+
+# MQTT配置
+mqtt:
+  enabled: ${MQTT_ENABLED:false}  # 添加开关来禁用MQTT服务
+  host: ${MQTT_HOST:tcp://localhost:1883}
+  username: ${MQTT_USERNAME:}
+  password: ${MQTT_PASSWORD:}
+  client-id-prefix: ${MQTT_CLIENT_ID_PREFIX:app_}
+  topic: ${MQTT_TOPIC:/topic/#}
+  qos: 2
+  connection-timeout: 10
+  keep-alive-interval: 20
+  auto-reconnect: true
+
+# 框架配置
+config:
+  # 开发环境接口
+  server-url: ${DEV_SERVER_URL:http://127.0.0.1:9200/api}
+  upload-path: ${DEV_UPLOAD_PATH:/tmp/uploads/}   # window(D:\Temp)

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopMerchantApplyMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_merchant_apply a
+        <where>
+            <if test="param.applyId != null">
+                AND a.apply_id = #{param.applyId}
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.shopType != null">
+                AND a.shop_type LIKE CONCAT('%', #{param.shopType}, '%')
+            </if>
+            <if test="param.merchantName != null">
+                AND a.merchant_name LIKE CONCAT('%', #{param.merchantName}, '%')
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.categoryId != null">
+                AND a.category_id = #{param.categoryId}
+            </if>
+            <if test="param.category != null">
+                AND a.category LIKE CONCAT('%', #{param.category}, '%')
+            </if>
+            <if test="param.lngAndLat != null">
+                AND a.lng_and_lat LIKE CONCAT('%', #{param.lngAndLat}, '%')
+            </if>
+            <if test="param.province != null">
+                AND a.province LIKE CONCAT('%', #{param.province}, '%')
+            </if>
+            <if test="param.city != null">
+                AND a.city LIKE CONCAT('%', #{param.city}, '%')
+            </if>
+            <if test="param.region != null">
+                AND a.region LIKE CONCAT('%', #{param.region}, '%')
+            </if>
+            <if test="param.address != null">
+                AND a.address LIKE CONCAT('%', #{param.address}, '%')
+            </if>
+            <if test="param.regionId != null">
+                AND a.region_id LIKE CONCAT('%', #{param.regionId}, '%')
+            </if>
+            <if test="param.commission != null">
+                AND a.commission = #{param.commission}
+            </if>
+            <if test="param.keywords != null">
+                AND a.keywords LIKE CONCAT('%', #{param.keywords}, '%')
+            </if>
+            <if test="param.yyzz != null">
+                AND a.yyzz LIKE CONCAT('%', #{param.yyzz}, '%')
+            </if>
+            <if test="param.sfz1 != null">
+                AND a.sfz1 LIKE CONCAT('%', #{param.sfz1}, '%')
+            </if>
+            <if test="param.sfz2 != null">
+                AND a.sfz2 LIKE CONCAT('%', #{param.sfz2}, '%')
+            </if>
+            <if test="param.files != null">
+                AND a.files LIKE CONCAT('%', #{param.files}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.ownStore != null">
+                AND a.own_store = #{param.ownStore}
+            </if>
+            <if test="param.recommend != null">
+                AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.goodsReview != null">
+                AND a.goods_review = #{param.goodsReview}
+            </if>
+            <if test="param.name2 != null">
+                AND a.name2 LIKE CONCAT('%', #{param.name2}, '%')
+            </if>
+            <if test="param.reason != null">
+                AND a.reason LIKE CONCAT('%', #{param.reason}, '%')
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopMerchantApply">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopMerchantApply">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

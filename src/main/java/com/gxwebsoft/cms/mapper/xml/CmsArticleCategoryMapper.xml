@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsArticleCategoryMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM cms_article_category a
+        <where>
+            <if test="param.categoryId != null">
+                AND a.category_id = #{param.categoryId}
+            </if>
+            <if test="param.categoryCode != null">
+                AND a.category_code LIKE CONCAT('%', #{param.categoryCode}, '%')
+            </if>
+            <if test="param.title != null">
+                AND a.title LIKE CONCAT('%', #{param.title}, '%')
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.parentId != null">
+                AND a.parent_id = #{param.parentId}
+            </if>
+            <if test="param.path != null">
+                AND a.path LIKE CONCAT('%', #{param.path}, '%')
+            </if>
+            <if test="param.component != null">
+                AND a.component LIKE CONCAT('%', #{param.component}, '%')
+            </if>
+            <if test="param.pageId != null">
+                AND a.page_id = #{param.pageId}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.count != null">
+                AND a.count = #{param.count}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.hide != null">
+                AND a.hide = #{param.hide}
+            </if>
+            <if test="param.recommend != null">
+                AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.showIndex != null">
+                AND a.show_index = #{param.showIndex}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsArticleCategory">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsArticleCategory">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

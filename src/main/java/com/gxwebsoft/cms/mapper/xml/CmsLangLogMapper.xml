@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsLangLogMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*, b.user_id as websiteUserId
+        FROM cms_lang_log a
+        LEFT JOIN cms_website b ON a.tenant_id = b.tenant_id
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.lang != null">
+                AND a.lang LIKE CONCAT('%', #{param.lang}, '%')
+            </if>
+            <if test="param.langId != null">
+                AND a.lang_id = #{param.langId}
+            </if>
+            <if test="param.code != null">
+                AND a.code LIKE CONCAT('%', #{param.code}, '%')
+            </if>
+            <if test="param.websiteUserId != null">
+              AND b.user_id = #{param.websiteUserId}
+            </if>
+
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsLangLog">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsLangLog">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="selectListAllRel" resultType="com.gxwebsoft.cms.entity.CmsLangLog">
+      <include refid="selectSql"></include>
+    </select>
+
+</mapper>

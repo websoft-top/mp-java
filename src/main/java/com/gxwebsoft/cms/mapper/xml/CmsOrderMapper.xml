@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsOrderMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*, b.category_id, c.user_id as websiteUserId
+        FROM cms_order a
+        LEFT JOIN cms_article b ON a.article_id = b.article_id
+        LEFT JOIN cms_website c ON a.tenant_id = c.tenant_id
+        <where>
+            <if test="param.orderId != null">
+                AND a.order_id = #{param.orderId}
+            </if>
+            <if test="param.title != null">
+                AND a.title LIKE CONCAT('%', #{param.title}, '%')
+            </if>
+            <if test="param.orderNo != null">
+                AND a.order_no LIKE CONCAT('%', #{param.orderNo}, '%')
+            </if>
+            <if test="param.model != null">
+              AND a.model = #{param.model}
+            </if>
+            <if test="param.lang != null">
+              AND a.lang = #{param.lang}
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.articleId != null">
+                AND a.article_id = #{param.articleId}
+            </if>
+            <if test="param.websiteId != null">
+              AND a.website_id = #{param.websiteId}
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.email != null">
+                AND a.email LIKE CONCAT('%', #{param.email}, '%')
+            </if>
+            <if test="param.content != null">
+                AND a.content LIKE CONCAT('%', #{param.content}, '%')
+            </if>
+            <if test="param.totalPrice != null">
+                AND a.total_price = #{param.totalPrice}
+            </if>
+            <if test="param.payPrice != null">
+                AND a.pay_price = #{param.payPrice}
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.totalNum != null">
+                AND a.total_num = #{param.totalNum}
+            </if>
+            <if test="param.qrcode != null">
+                AND a.qrcode LIKE CONCAT('%', #{param.qrcode}, '%')
+            </if>
+            <if test="param.channel != null">
+                AND a.channel = #{param.channel}
+            </if>
+            <if test="param.expirationTime != null">
+                AND a.expiration_time LIKE CONCAT('%', #{param.expirationTime}, '%')
+            </if>
+            <if test="param.isSettled != null">
+                AND a.is_settled = #{param.isSettled}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.websiteUserId != null">
+              AND c.user_id = #{param.websiteUserId}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+              AND (a.comments  LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.title LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.content LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.phone = #{param.keywords}
+              )
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsOrder">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsOrder">
+        <include refid="selectSql"></include>
+    </select>
+
+  <select id="selectListAllRel" resultType="com.gxwebsoft.cms.entity.CmsOrder">
+    <include refid="selectSql"></include>
+  </select>
+
+</mapper>

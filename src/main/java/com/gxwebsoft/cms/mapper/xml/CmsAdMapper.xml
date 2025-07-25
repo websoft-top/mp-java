@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsAdMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*, b.user_id as websiteUserId, c.title as categoryName
+        FROM cms_ad a
+        LEFT JOIN cms_website b ON a.tenant_id = b.tenant_id
+        LEFT JOIN cms_navigation c ON a.category_id = c.navigation_id
+        <where>
+            <if test="param.adId != null">
+                AND a.ad_id = #{param.adId}
+            </if>
+            <if test="param.type != null">
+              AND a.type = #{param.type}
+            </if>
+            <if test="param.categoryId != null">
+              AND a.category_id = #{param.categoryId}
+            </if>
+            <if test="param.lang != null">
+              AND a.lang = #{param.lang}
+            </if>
+            <if test="param.name != null">
+                AND a.name LIKE CONCAT('%', #{param.name}, '%')
+            </if>
+            <if test="param.width != null">
+                AND a.width LIKE CONCAT('%', #{param.width}, '%')
+            </if>
+            <if test="param.height != null">
+                AND a.height LIKE CONCAT('%', #{param.height}, '%')
+            </if>
+            <if test="param.images != null">
+                AND a.images LIKE CONCAT('%', #{param.images}, '%')
+            </if>
+            <if test="param.path != null">
+                AND a.path LIKE CONCAT('%', #{param.path}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.websiteUserId != null">
+              AND b.user_id = #{param.websiteUserId}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+              AND (a.name  LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.ad_id = #{param.keywords}
+              )
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsAd">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsAd">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="selectListAllRel" resultType="com.gxwebsoft.cms.entity.CmsAd">
+      <include refid="selectSql"></include>
+    </select>
+
+
+</mapper>

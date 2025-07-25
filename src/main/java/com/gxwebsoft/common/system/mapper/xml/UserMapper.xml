@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gxwebsoft.common.system.mapper.UserMapper">
+
+    <!-- 性别字典查询sql -->
+    <sql id="selectSexDictSql">
+        SELECT ta.*
+        FROM gxwebsoft_core.sys_dictionary_data ta
+                 LEFT JOIN gxwebsoft_core.sys_dictionary tb
+                           ON ta.dict_id = tb.dict_id
+                               AND tb.deleted = 0
+        WHERE ta.deleted = 0
+          AND tb.dict_code = 'sex'
+    </sql>
+
+    <!-- 用户角色查询sql -->
+    <sql id="selectUserRoleSql">
+        SELECT a.user_id,
+               GROUP_CONCAT(b.role_name) role_name
+        FROM gxwebsoft_core.sys_user_role a
+                 LEFT JOIN gxwebsoft_core.sys_role b ON a.role_id = b.role_id
+        GROUP BY a.user_id
+    </sql>
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*,
+        c.dict_data_name sex_name,
+        e.tenant_name,
+        h.dealer_id
+        FROM gxwebsoft_core.sys_user a
+        LEFT JOIN (
+        <include refid="selectSexDictSql"/>
+        ) c ON a.sex = c.dict_data_code
+        LEFT JOIN(
+        <include refid="selectUserRoleSql"/>
+        ) d ON a.user_id = d.user_id
+        LEFT JOIN gxwebsoft_core.sys_tenant e ON a.tenant_id = e.tenant_id
+        LEFT JOIN gxwebsoft_core.sys_user_referee h ON a.user_id = h.user_id and h.deleted = 0
+        <where>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.username != null">
+                AND a.username LIKE CONCAT('%', #{param.username}, '%')
+            </if>
+            <if test="param.nickname != null">
+                AND a.nickname LIKE CONCAT('%', #{param.nickname}, '%')
+            </if>
+            <if test="param.type != null">
+              AND a.type = #{param.type}
+            </if>
+            <if test="param.sex != null">
+                AND a.sex = #{param.sex}
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.email != null">
+                AND a.email LIKE CONCAT('%', #{param.email}, '%')
+            </if>
+            <if test="param.emailVerified != null">
+                AND a.email_verified = #{param.emailVerified}
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.companyName != null">
+              AND a.company_name LIKE CONCAT('%', #{param.companyName}, '%')
+            </if>
+            <if test="param.idCard != null">
+                AND a.id_card LIKE CONCAT('%', #{param.idCard}, '%')
+            </if>
+            <if test="param.birthday != null">
+                AND a.birthday LIKE CONCAT('%', #{param.birthday}, '%')
+            </if>
+            <if test="param.organizationId != null">
+                AND a.organization_id = #{param.organizationId}
+            </if>
+            <if test="param.isStaff != null">
+              AND a.organization_id > 0
+            </if>
+            <if test="param.platform != null">
+              AND a.platform = #{param.platform}
+            </if>
+            <if test="param.status != null">
+                AND a.`status` = #{param.status}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.recommend != null">
+              AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.roleId != null">
+                AND a.user_id IN (SELECT user_id FROM sys_user_role WHERE role_id=#{param.roleId})
+            </if>
+            <if test="param.userIds != null">
+              AND a.user_id IN
+              <foreach collection="param.userIds" item="item" separator="," open="(" close=")">
+                #{item}
+              </foreach>
+            </if>
+            <if test="param.phones != null">
+              AND a.phones IN
+              <foreach collection="param.phones" item="item" separator="," open="(" close=")">
+                #{item}
+              </foreach>
+            </if>
+            <if test="param.province != null">
+              AND a.province LIKE CONCAT('%', #{param.province}, '%')
+            </if>
+            <if test="param.city != null">
+              AND a.city LIKE CONCAT('%', #{param.city}, '%')
+            </if>
+            <if test="param.cityMate != null">
+              AND i.city_mate LIKE CONCAT('%', #{param.cityMate}, '%')
+            </if>
+            <if test="param.region != null">
+              AND a.region LIKE CONCAT('%', #{param.region}, '%')
+            </if>
+            <if test="param.sexName != null">
+                AND c.dict_data_name = #{param.sexName}
+            </if>
+            <if test="param.keywords != null">
+                AND (
+                  a.username LIKE CONCAT('%', #{param.keywords}, '%')
+                  OR a.user_id = #{param.keywords}
+                  OR a.nickname LIKE CONCAT('%', #{param.keywords}, '%')
+                  OR a.real_name LIKE CONCAT('%', #{param.keywords}, '%')
+                  OR a.alias LIKE CONCAT('%', #{param.keywords}, '%')
+                  OR a.phone LIKE CONCAT('%', #{param.keywords}, '%')
+                  OR a.email LIKE CONCAT('%', #{param.keywords}, '%')
+                  OR c.dict_data_name LIKE CONCAT('%', #{param.keywords}, '%')
+                  OR d.role_name LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+            </if>
+            <if test="param.parentId != null">
+              AND a.organization_id IN (SELECT organization_id FROM sys_organization WHERE parent_id=#{param.parentId})
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.common.system.entity.User">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.common.system.entity.User">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 根据账号查询 -->
+    <select id="selectByUsername" resultType="com.gxwebsoft.common.system.entity.User">
+        SELECT a.* ,
+        c.dict_data_name sex_name,f.oauth_id as openid,f.unionid
+        FROM gxwebsoft_core.sys_user a
+        LEFT JOIN (
+        <include refid="selectSexDictSql"/>
+        ) c ON a.sex = c.dict_data_code
+        LEFT JOIN shop_user_oauth f ON f.user_id = a.user_id and f.oauth_type = 'MP-WEIXIN'
+        <where>
+            AND a.deleted = 0
+            AND (a.username = #{username} OR a.phone = #{username} OR a.email = #{username})
+            AND a.tenant_id = #{tenantId}
+<!--            <if test="tenantId != null">-->
+<!--                AND a.tenant_id = #{tenantId}-->
+<!--            </if>-->
+<!--            <if test="tenantId == null">-->
+<!--                AND a.tenant_id = 1-->
+<!--            </if>-->
+        </where>
+    </select>
+
+    <!-- 根据手机号码查询 -->
+    <select id="selectByPhone" resultType="com.gxwebsoft.common.system.entity.User">
+      SELECT a.*
+      FROM gxwebsoft_core.sys_user a
+      <where>
+        AND a.deleted = 0
+        AND a.phone = #{phone}
+        <if test="tenantId != null">
+          AND a.tenant_id = #{tenantId}
+        </if>
+        <if test="tenantId == null">
+          AND a.tenant_id = 1
+        </if>
+      </where>
+    </select>
+
+  <!-- 获取所有的邮政协会/管局工作人员 -->
+  <select id="listByAlert" resultType="com.gxwebsoft.common.system.entity.User">
+    SELECT a.*
+    FROM gxwebsoft_core.sys_user a
+    <where>
+      AND a.deleted = 0
+      AND a.organization_id = 420 OR a.organization_id = 421
+      <if test="tenantId != null">
+        AND a.tenant_id = #{tenantId}
+      </if>
+    </where>
+  </select>
+
+
+
+
+  <!-- 查询单条数据 -->
+  <select id="getOne" resultType="com.gxwebsoft.common.system.entity.User">
+    SELECT * FROM gxwebsoft_core.sys_user WHERE user_id = #{param.userId} and deleted = 0
+  </select>
+
+  <!-- 查询统计数据 -->
+  <select id="selectListStatisticsRel" resultType="com.gxwebsoft.common.system.entity.User">
+    SELECT a.*
+    FROM gxwebsoft_core.sys_user a
+    <where>
+      AND a.deleted = 0
+    </where>
+  </select>
+
+  <!-- 更新用户信息 -->
+  <update id="updateByUserId">
+    UPDATE gxwebsoft_core.sys_user SET grade_id = #{param.gradeId} WHERE user_id = #{param.userId}
+  </update>
+
+  <select id="pageAdminByPhone" resultType="com.gxwebsoft.common.system.entity.User">
+    SELECT a.*,b.tenant_name
+    FROM gxwebsoft_core.sys_user a
+    LEFT JOIN gxwebsoft_core.sys_tenant b ON a.tenant_id = b.tenant_id
+    <where>
+      <if test="param.phone != null">
+        AND a.phone = #{param.phone}
+      </if>
+      AND is_admin = 1 AND a.deleted = 0
+    </where>
+  </select>
+
+</mapper>

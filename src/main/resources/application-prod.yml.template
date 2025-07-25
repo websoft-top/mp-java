@@ -1,0 +1,55 @@
+# 生产环境配置
+
+# 数据源配置
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/modules?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# 日志配置
+logging:
+  file:
+    name: ${LOG_FILE_NAME:websoft-modules.log}
+  level:
+    root: WARN
+    com.gxwebsoft: ERROR
+    com.baomidou.mybatisplus: ERROR
+
+socketio:
+  host: ${SOCKETIO_HOST:0.0.0.0} #IP地址
+
+redis:
+  database: 0
+  host: ${REDIS_HOST:localhost}
+  port: ${REDIS_PORT:6379}
+  password: ${REDIS_PASSWORD:}
+
+# MQTT配置
+mqtt:
+  enabled: ${MQTT_ENABLED:false}  # 添加开关来禁用MQTT服务
+  host: ${MQTT_HOST:tcp://localhost:1883}
+  username: ${MQTT_USERNAME:}
+  password: ${MQTT_PASSWORD:}
+  client-id-prefix: ${MQTT_CLIENT_ID_PREFIX:app_}
+  topic: ${MQTT_TOPIC:/topic/#}
+  qos: 2
+  connection-timeout: 10
+  keep-alive-interval: 20
+  auto-reconnect: true
+
+# 框架配置
+config:
+  # 生产环境接口
+  server-url: ${PROD_SERVER_URL:https://your-domain.com/api}
+  upload-path: ${PROD_UPLOAD_PATH:/var/www/uploads/}
+
+  # 阿里云OSS云存储
+  endpoint: ${ALIYUN_OSS_ENDPOINT:}
+  accessKeyId: ${ALIYUN_ACCESS_KEY_ID:}
+  accessKeySecret: ${ALIYUN_ACCESS_KEY_SECRET:}
+  bucketName: ${ALIYUN_BUCKET_NAME:}
+  bucketDomain: ${ALIYUN_BUCKET_DOMAIN:}
+  aliyunDomain: ${ALIYUN_DOMAIN:}

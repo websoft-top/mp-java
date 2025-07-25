@@ -1,0 +1,43 @@
+import type { PageParam } from '@/api';
+
+/**
+ * ${table.comment!}
+ */
+export interface ${entity} {
+<% /** -----------BEGIN 字段循环遍历----------- **/ %>
+<% for(field in table.fields) { %>
+    <%
+    var keyPropertyName;
+    if(field.keyFlag) {
+        keyPropertyName = field.propertyName;
+    }
+    %>
+    <% /* 主键 */ %>
+    <% if(field.keyFlag) { %>
+    <% /* 普通字段 */ %>
+    <% } else if(isNotEmpty(field.fill)) { %>
+        <% if(field.convert){ %>
+    @TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
+        <% }else{ %>
+    @TableField(fill = FieldFill.${field.fill})
+        <% } %>
+    <% } else if(field.convert) { %>
+    @TableField("${field.annotationColumnName}")
+    <% } %>
+  // ${field.comment}
+  ${field.propertyName}?: <% if(field.propertyType == 'Integer') { %>number<% }else{ %>string<% } %>;
+<% } %>
+<% /** -----------END 字段循环遍历----------- **/ %>
+}
+
+/**
+ * ${table.comment!}搜索条件
+ */
+export interface ${entity}Param extends PageParam {
+<% for(field in table.fields) { %>
+<% if(field.keyFlag) { %>
+  ${field.propertyName}?: number;
+  <% } %>
+<% } %>
+  keywords?: string;
+}

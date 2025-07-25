@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopWechatDepositMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_wechat_deposit a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.oid != null">
+                AND a.oid = #{param.oid}
+            </if>
+            <if test="param.uid != null">
+                AND a.uid = #{param.uid}
+            </if>
+            <if test="param.orderNum != null">
+                AND a.order_num LIKE CONCAT('%', #{param.orderNum}, '%')
+            </if>
+            <if test="param.wechatOrder != null">
+                AND a.wechat_order LIKE CONCAT('%', #{param.wechatOrder}, '%')
+            </if>
+            <if test="param.wechatReturn != null">
+                AND a.wechat_return LIKE CONCAT('%', #{param.wechatReturn}, '%')
+            </if>
+            <if test="param.siteName != null">
+                AND a.site_name LIKE CONCAT('%', #{param.siteName}, '%')
+            </if>
+            <if test="param.username != null">
+                AND a.username LIKE CONCAT('%', #{param.username}, '%')
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.name != null">
+                AND a.name LIKE CONCAT('%', #{param.name}, '%')
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopWechatDeposit">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopWechatDeposit">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

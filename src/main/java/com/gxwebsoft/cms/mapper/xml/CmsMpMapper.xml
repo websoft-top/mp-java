@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsMpMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM cms_mp a
+        <where>
+            <if test="param.mpId != null">
+                AND a.mp_id = #{param.mpId}
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.appId != null">
+                AND a.app_id LIKE CONCAT('%', #{param.appId}, '%')
+            </if>
+            <if test="param.appSecret != null">
+                AND a.app_secret LIKE CONCAT('%', #{param.appSecret}, '%')
+            </if>
+            <if test="param.mpName != null">
+                AND a.mp_name LIKE CONCAT('%', #{param.mpName}, '%')
+            </if>
+            <if test="param.shortName != null">
+                AND a.short_name LIKE CONCAT('%', #{param.shortName}, '%')
+            </if>
+            <if test="param.avatar != null">
+                AND a.avatar LIKE CONCAT('%', #{param.avatar}, '%')
+            </if>
+            <if test="param.mpQrcode != null">
+                AND a.mp_qrcode LIKE CONCAT('%', #{param.mpQrcode}, '%')
+            </if>
+            <if test="param.authentication != null">
+                AND a.authentication = #{param.authentication}
+            </if>
+            <if test="param.companyName != null">
+                AND a.company_name LIKE CONCAT('%', #{param.companyName}, '%')
+            </if>
+            <if test="param.icpNo != null">
+                AND a.icp_no LIKE CONCAT('%', #{param.icpNo}, '%')
+            </if>
+            <if test="param.email != null">
+                AND a.email LIKE CONCAT('%', #{param.email}, '%')
+            </if>
+            <if test="param.password != null">
+                AND a.password LIKE CONCAT('%', #{param.password}, '%')
+            </if>
+            <if test="param.ghId != null">
+                AND a.gh_id LIKE CONCAT('%', #{param.ghId}, '%')
+            </if>
+            <if test="param.mainPath != null">
+                AND a.main_path LIKE CONCAT('%', #{param.mainPath}, '%')
+            </if>
+            <if test="param.expirationTime != null">
+                AND a.expiration_time LIKE CONCAT('%', #{param.expirationTime}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsMp">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsMp">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

@@ -1,0 +1,61 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+### 敏感信息和配置文件 ###
+# 配置文件 - 包含敏感信息
+src/main/resources/application.yml
+src/main/resources/application-dev.yml
+src/main/resources/application-prod.yml
+# 保留模板文件供参考
+!src/main/resources/application*.yml.template
+
+# 证书文件和密钥
+src/main/resources/cert/
+*.pem
+*.crt
+*.key
+*.p12
+*.jks
+
+# 环境变量文件
+.env
+.env.local
+.env.production
+.env.development
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+temp/
+tmp/

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopOrderMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*,b.nickname,b.real_name as realName, b.avatar,b.phone as phone
+        FROM shop_order a
+        LEFT JOIN gxwebsoft_core.sys_user b ON a.user_id = b.user_id
+        <where>
+            <if test="param.orderId != null">
+                AND a.order_id = #{param.orderId}
+            </if>
+            <if test="param.orderNo != null">
+                AND a.order_no LIKE CONCAT('%', #{param.orderNo}, '%')
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.deliveryType != null">
+                AND a.delivery_type = #{param.deliveryType}
+            </if>
+            <if test="param.channel != null">
+                AND a.channel = #{param.channel}
+            </if>
+            <if test="param.transactionId != null">
+                AND a.transaction_id LIKE CONCAT('%', #{param.transactionId}, '%')
+            </if>
+            <if test="param.refundOrder != null">
+                AND a.refund_order LIKE CONCAT('%', #{param.refundOrder}, '%')
+            </if>
+            <if test="param.merchantId != null">
+                AND a.merchant_id = #{param.merchantId}
+            </if>
+            <if test="param.merchantName != null">
+                AND a.merchant_name LIKE CONCAT('%', #{param.merchantName}, '%')
+            </if>
+            <if test="param.merchantCode != null">
+                AND a.merchant_code LIKE CONCAT('%', #{param.merchantCode}, '%')
+            </if>
+            <if test="param.couponId != null">
+                AND a.coupon_id = #{param.couponId}
+            </if>
+            <if test="param.cardId != null">
+                AND a.card_id LIKE CONCAT('%', #{param.cardId}, '%')
+            </if>
+            <if test="param.adminId != null">
+                AND a.admin_id = #{param.adminId}
+            </if>
+            <if test="param.confirmId != null">
+                AND a.confirm_id = #{param.confirmId}
+            </if>
+            <if test="param.icCard != null">
+                AND a.ic_card LIKE CONCAT('%', #{param.icCard}, '%')
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.address != null">
+                AND a.address LIKE CONCAT('%', #{param.address}, '%')
+            </if>
+            <if test="param.addressLat != null">
+                AND a.address_lat LIKE CONCAT('%', #{param.addressLat}, '%')
+            </if>
+            <if test="param.addressLng != null">
+                AND a.address_lng LIKE CONCAT('%', #{param.addressLng}, '%')
+            </if>
+            <if test="param.selfTakeMerchantId != null">
+                AND a.self_take_merchant_id = #{param.selfTakeMerchantId}
+            </if>
+            <if test="param.selfTakeMerchantName != null">
+                AND a.self_take_merchant_name LIKE CONCAT('%', #{param.selfTakeMerchantName}, '%')
+            </if>
+            <if test="param.sendStartTime != null">
+                AND a.send_start_time LIKE CONCAT('%', #{param.sendStartTime}, '%')
+            </if>
+            <if test="param.sendEndTime != null">
+                AND a.send_end_time LIKE CONCAT('%', #{param.sendEndTime}, '%')
+            </if>
+            <if test="param.expressMerchantId != null">
+                AND a.express_merchant_id = #{param.expressMerchantId}
+            </if>
+            <if test="param.expressMerchantName != null">
+                AND a.express_merchant_name LIKE CONCAT('%', #{param.expressMerchantName}, '%')
+            </if>
+            <if test="param.totalPrice != null">
+                AND a.total_price = #{param.totalPrice}
+            </if>
+            <if test="param.reducePrice != null">
+                AND a.reduce_price = #{param.reducePrice}
+            </if>
+            <if test="param.payPrice != null">
+                AND a.pay_price = #{param.payPrice}
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.money != null">
+                AND a.money = #{param.money}
+            </if>
+            <if test="param.refundMoney != null">
+                AND a.refund_money = #{param.refundMoney}
+            </if>
+            <if test="param.coachPrice != null">
+                AND a.coach_price = #{param.coachPrice}
+            </if>
+            <if test="param.totalNum != null">
+                AND a.total_num = #{param.totalNum}
+            </if>
+            <if test="param.coachId != null">
+                AND a.coach_id = #{param.coachId}
+            </if>
+            <if test="param.payUserId != null">
+                AND a.pay_user_id = #{param.payUserId}
+            </if>
+            <if test="param.payType != null">
+                AND a.pay_type = #{param.payType}
+            </if>
+            <if test="param.friendPayType != null">
+                AND a.friend_pay_type = #{param.friendPayType}
+            </if>
+            <if test="param.payStatus != null">
+                AND a.pay_status = #{param.payStatus}
+            </if>
+            <if test="param.orderStatus != null">
+                AND a.order_status = #{param.orderStatus}
+            </if>
+            <if test="param.deliveryStatus != null">
+                AND a.delivery_status = #{param.deliveryStatus}
+            </if>
+            <if test="param.deliveryTime != null">
+                AND a.delivery_time LIKE CONCAT('%', #{param.deliveryTime}, '%')
+            </if>
+            <if test="param.couponType != null">
+                AND a.coupon_type = #{param.couponType}
+            </if>
+            <if test="param.couponDesc != null">
+                AND a.coupon_desc LIKE CONCAT('%', #{param.couponDesc}, '%')
+            </if>
+            <if test="param.qrcode != null">
+                AND a.qrcode LIKE CONCAT('%', #{param.qrcode}, '%')
+            </if>
+            <if test="param.returnNum != null">
+                AND a.return_num = #{param.returnNum}
+            </if>
+            <if test="param.returnMoney != null">
+                AND a.return_money = #{param.returnMoney}
+            </if>
+            <if test="param.startTime != null">
+                AND a.start_time LIKE CONCAT('%', #{param.startTime}, '%')
+            </if>
+            <if test="param.isInvoice != null">
+                AND a.is_invoice = #{param.isInvoice}
+            </if>
+            <if test="param.invoiceNo != null">
+                AND a.invoice_no LIKE CONCAT('%', #{param.invoiceNo}, '%')
+            </if>
+            <if test="param.payTime != null">
+                AND a.pay_time LIKE CONCAT('%', #{param.payTime}, '%')
+            </if>
+            <if test="param.refundTime != null">
+                AND a.refund_time LIKE CONCAT('%', #{param.refundTime}, '%')
+            </if>
+            <if test="param.refundApplyTime != null">
+                AND a.refund_apply_time LIKE CONCAT('%', #{param.refundApplyTime}, '%')
+            </if>
+            <if test="param.expirationTime != null">
+                AND a.expiration_time LIKE CONCAT('%', #{param.expirationTime}, '%')
+            </if>
+            <if test="param.checkBill != null">
+                AND a.check_bill = #{param.checkBill}
+            </if>
+            <if test="param.isSettled != null">
+                AND a.is_settled = #{param.isSettled}
+            </if>
+            <if test="param.version != null">
+                AND a.version = #{param.version}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.selfTakeCode != null">
+                AND a.self_take_code LIKE CONCAT('%', #{param.selfTakeCode}, '%')
+            </if>
+            <if test="param.hasTakeGift != null">
+                AND a.has_take_gift = #{param.hasTakeGift}
+            </if>
+            <if test="param.keywords != null">
+              AND (a.order_no LIKE CONCAT('%', #{param.keywords}, '%')
+              OR b.phone = #{param.keywords}
+              OR a.order_id = #{param.keywords}
+              OR a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+              )
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopOrder">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopOrder">
+        <include refid="selectSql"></include>
+    </select>
+
+  <!-- 根据订单号查询订单 -->
+  <select id="getByOutTradeNo" resultType="com.gxwebsoft.shop.entity.ShopOrder">
+    SELECT * FROM shop_order WHERE order_no = #{outTradeNo}
+  </select>
+
+  <!-- 根据订单号修改订单 -->
+  <update id="updateByOutTradeNo" parameterType="com.gxwebsoft.cms.entity.CmsWebsite">
+    UPDATE shop_order
+    <set>
+      <if test="param.payType != null">
+        pay_type = #{param.payType},
+      </if>
+      <if test="param.payStatus != null">
+        pay_status = #{param.payType},
+      </if>
+      <if test="param.orderStatus != null">
+        order_status = #{param.orderStatus},
+      </if>
+      <if test="param.deliveryStatus != null">
+        delivery_status = #{param.deliveryStatus},
+      </if>
+      <if test="param.deliveryTime != null">
+        delivery_time = #{param.deliveryTime},
+      </if>
+      <if test="param.payTime != null">
+        pay_time = #{param.payTime},
+      </if>
+      <if test="param.refundTime != null">
+        refund_time = #{param.refundTime},
+      </if>
+      <if test="param.selfTakeCode != null">
+        self_take_code = #{param.selfTakeCode},
+      </if>
+      <if test="param.invoiceNo != null">
+        invoice_no = #{param.invoiceNo},
+      </if>
+      <if test="param.isInvoice != null">
+        is_invoice = #{param.isInvoice},
+      </if>
+      <if test="param.startTime != null">
+        start_time = #{param.startTime},
+      </if>
+      <if test="param.qrcode != null">
+        qrcode = #{param.qrcode},
+      </if>
+      <if test="param.payUserId != null">
+        pay_user_id = #{param.payUserId},
+      </if>
+      <if test="param.formId != null">
+        form_id = #{param.formId},
+      </if>
+      <if test="param.totalPrice != null">
+        total_price = #{param.totalPrice},
+      </if>
+      <if test="param.reducePrice != null">
+        reduce_price = #{param.reducePrice},
+      </if>
+      <if test="param.payPrice != null">
+        pay_price = #{param.payPrice},
+      </if>
+      <if test="param.price != null">
+        price = #{param.price},
+      </if>
+      <if test="param.money != null">
+        money = #{param.money},
+      </if>
+      <if test="param.refundMoney != null">
+        refund_money = #{param.refundMoney},
+      </if>
+      <if test="param.totalNum != null">
+        total_num = #{param.totalNum},
+      </if>
+      <if test="param.coachId != null">
+        coach_id = #{param.coachId},
+      </if>
+      <if test="param.expressMerchantId != null">
+        express_merchant_id = #{param.expressMerchantId},
+      </if>
+      <if test="param.expressMerchantName != null">
+        express_merchant_name = #{param.expressMerchantName},
+      </if>
+      <if test="param.sendStartTime != null">
+        send_start_time = #{param.sendStartTime},
+      </if>
+      <if test="param.sendEndTime != null">
+        send_end_time = #{param.sendEndTime},
+      </if>
+      <if test="param.selfTakeMerchantId != null">
+        self_take_merchant_id = #{param.selfTakeMerchantId},
+      </if>
+      <if test="param.selfTakeMerchantName != null">
+        self_take_merchant_name = #{param.selfTakeMerchantName},
+      </if>
+
+      <if test="param.address != null">
+        address = #{param.address},
+      </if>
+      <if test="param.confirmId != null">
+        confirm_id = #{param.confirmId},
+      </if>
+      <if test="param.icCard != null">
+        ic_card = #{param.icCard},
+      </if>
+      <if test="param.adminId != null">
+        admin_id = #{param.adminId},
+      </if>
+      <if test="param.cardId != null">
+        card_id = #{param.cardId},
+      </if>
+      <if test="param.couponId != null">
+        coupon_id = #{param.couponId},
+      </if>
+      <if test="param.merchantId != null">
+        merchant_id = #{param.merchantId},
+      </if>
+      <if test="param.transactionId != null">
+        transaction_id = #{param.transactionId},
+      </if>
+      <if test="param.refundOrder != null">
+        refund_order = #{param.refundOrder},
+      </if>
+      <if test="param.channel != null">
+        channel = #{param.channel},
+      </if>
+      <if test="param.deliveryType != null">
+        delivery_type = #{param.deliveryType},
+      </if>
+      <if test="param.type != null">
+        `type` = #{param.type},
+      </if>
+      <if test="param.deleted != null">
+        deleted = #{param.deleted},
+      </if>
+      <if test="param.deleted == null">
+        deleted = 0,
+      </if>
+    </set>
+    <where>
+      order_no = #{param.orderNo}
+    </where>
+  </update>
+
+</mapper>

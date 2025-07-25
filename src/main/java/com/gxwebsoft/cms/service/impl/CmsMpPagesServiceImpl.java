@@ -1,0 +1,47 @@
+package com.gxwebsoft.cms.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gxwebsoft.cms.mapper.CmsMpPagesMapper;
+import com.gxwebsoft.cms.service.CmsMpPagesService;
+import com.gxwebsoft.cms.entity.CmsMpPages;
+import com.gxwebsoft.cms.param.CmsMpPagesParam;
+import com.gxwebsoft.common.core.web.PageParam;
+import com.gxwebsoft.common.core.web.PageResult;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * 小程序页面Service实现
+ *
+ * @author 科技小王子
+ * @since 2024-09-10 20:47:57
+ */
+@Service
+public class CmsMpPagesServiceImpl extends ServiceImpl<CmsMpPagesMapper, CmsMpPages> implements CmsMpPagesService {
+
+    @Override
+    public PageResult<CmsMpPages> pageRel(CmsMpPagesParam param) {
+        PageParam<CmsMpPages, CmsMpPagesParam> page = new PageParam<>(param);
+        page.setDefaultOrder("create_time desc");
+        List<CmsMpPages> list = baseMapper.selectPageRel(page, param);
+        return new PageResult<>(list, page.getTotal());
+    }
+
+    @Override
+    public List<CmsMpPages> listRel(CmsMpPagesParam param) {
+        List<CmsMpPages> list = baseMapper.selectListRel(param);
+        // 排序
+        PageParam<CmsMpPages, CmsMpPagesParam> page = new PageParam<>();
+        page.setDefaultOrder("create_time desc");
+        return page.sortRecords(list);
+    }
+
+    @Override
+    public CmsMpPages getByIdRel(Integer id) {
+        CmsMpPagesParam param = new CmsMpPagesParam();
+        param.setId(id);
+        return param.getOne(baseMapper.selectListRel(param));
+    }
+
+}

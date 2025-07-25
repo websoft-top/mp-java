@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopMerchantMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_merchant a
+        <where>
+            <if test="param.merchantId != null">
+                AND a.merchant_id = #{param.merchantId}
+            </if>
+            <if test="param.merchantName != null">
+                AND a.merchant_name LIKE CONCAT('%', #{param.merchantName}, '%')
+            </if>
+            <if test="param.merchantCode != null">
+                AND a.merchant_code LIKE CONCAT('%', #{param.merchantCode}, '%')
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.shopType != null">
+                AND a.shop_type LIKE CONCAT('%', #{param.shopType}, '%')
+            </if>
+            <if test="param.itemType != null">
+                AND a.item_type LIKE CONCAT('%', #{param.itemType}, '%')
+            </if>
+            <if test="param.category != null">
+                AND a.category LIKE CONCAT('%', #{param.category}, '%')
+            </if>
+            <if test="param.merchantCategoryId != null">
+                AND a.merchant_category_id = #{param.merchantCategoryId}
+            </if>
+            <if test="param.merchantCategoryTitle != null">
+                AND a.merchant_category_title LIKE CONCAT('%', #{param.merchantCategoryTitle}, '%')
+            </if>
+            <if test="param.lngAndLat != null">
+                AND a.lng_and_lat LIKE CONCAT('%', #{param.lngAndLat}, '%')
+            </if>
+            <if test="param.lng != null">
+                AND a.lng LIKE CONCAT('%', #{param.lng}, '%')
+            </if>
+            <if test="param.lat != null">
+                AND a.lat LIKE CONCAT('%', #{param.lat}, '%')
+            </if>
+            <if test="param.province != null">
+                AND a.province LIKE CONCAT('%', #{param.province}, '%')
+            </if>
+            <if test="param.city != null">
+                AND a.city LIKE CONCAT('%', #{param.city}, '%')
+            </if>
+            <if test="param.region != null">
+                AND a.region LIKE CONCAT('%', #{param.region}, '%')
+            </if>
+            <if test="param.address != null">
+                AND a.address LIKE CONCAT('%', #{param.address}, '%')
+            </if>
+            <if test="param.commission != null">
+                AND a.commission = #{param.commission}
+            </if>
+            <if test="param.keywords != null">
+                AND a.keywords LIKE CONCAT('%', #{param.keywords}, '%')
+            </if>
+            <if test="param.files != null">
+                AND a.files LIKE CONCAT('%', #{param.files}, '%')
+            </if>
+            <if test="param.businessTime != null">
+                AND a.business_time LIKE CONCAT('%', #{param.businessTime}, '%')
+            </if>
+            <if test="param.content != null">
+                AND a.content LIKE CONCAT('%', #{param.content}, '%')
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.ownStore != null">
+                AND a.own_store = #{param.ownStore}
+            </if>
+            <if test="param.canExpress != null">
+                AND a.can_express = #{param.canExpress}
+            </if>
+            <if test="param.recommend != null">
+                AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.isOn != null">
+                AND a.is_on = #{param.isOn}
+            </if>
+            <if test="param.startTime != null">
+                AND a.start_time LIKE CONCAT('%', #{param.startTime}, '%')
+            </if>
+            <if test="param.endTime != null">
+                AND a.end_time LIKE CONCAT('%', #{param.endTime}, '%')
+            </if>
+            <if test="param.goodsReview != null">
+                AND a.goods_review = #{param.goodsReview}
+            </if>
+            <if test="param.adminUrl != null">
+                AND a.admin_url LIKE CONCAT('%', #{param.adminUrl}, '%')
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopMerchant">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopMerchant">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

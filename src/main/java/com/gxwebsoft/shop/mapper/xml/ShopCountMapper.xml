@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopCountMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_count a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.dateTime != null">
+                AND a.date_time LIKE CONCAT('%', #{param.dateTime}, '%')
+            </if>
+            <if test="param.totalPrice != null">
+                AND a.total_price = #{param.totalPrice}
+            </if>
+            <if test="param.todayPrice != null">
+                AND a.today_price = #{param.todayPrice}
+            </if>
+            <if test="param.totalUsers != null">
+                AND a.total_users = #{param.totalUsers}
+            </if>
+            <if test="param.todayUsers != null">
+                AND a.today_users = #{param.todayUsers}
+            </if>
+            <if test="param.totalOrders != null">
+                AND a.total_orders = #{param.totalOrders}
+            </if>
+            <if test="param.todayOrders != null">
+                AND a.today_orders = #{param.todayOrders}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopCount">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopCount">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

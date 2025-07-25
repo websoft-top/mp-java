@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsWebsiteSettingMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM cms_website_setting a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.websiteId != null">
+                AND a.website_id = #{param.websiteId}
+            </if>
+            <if test="param.official != null">
+                AND a.official = #{param.official}
+            </if>
+            <if test="param.market != null">
+                AND a.market = #{param.market}
+            </if>
+            <if test="param.search != null">
+                AND a.search = #{param.search}
+            </if>
+            <if test="param.share != null">
+                AND a.share = #{param.share}
+            </if>
+            <if test="param.plugin != null">
+                AND a.plugin = #{param.plugin}
+            </if>
+            <if test="param.editor != null">
+                AND a.editor = #{param.editor}
+            </if>
+            <if test="param.searchBtn != null">
+                AND a.search_btn = #{param.searchBtn}
+            </if>
+            <if test="param.loginBtn != null">
+                AND a.login_btn = #{param.loginBtn}
+            </if>
+            <if test="param.floatTool != null">
+                AND a.float_tool = #{param.floatTool}
+            </if>
+            <if test="param.copyrightLink != null">
+                AND a.copyright_link = #{param.copyrightLink}
+            </if>
+            <if test="param.maxMenuNum != null">
+                AND a.max_menu_num = #{param.maxMenuNum}
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsWebsiteSetting">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsWebsiteSetting">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

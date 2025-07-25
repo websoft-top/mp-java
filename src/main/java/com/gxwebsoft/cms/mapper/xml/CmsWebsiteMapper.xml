@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsWebsiteMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM cms_website a
+        <where>
+            <if test="param.websiteId != null">
+                AND a.website_id = #{param.websiteId}
+            </if>
+            <if test="param.type != null">
+              AND a.type LIKE CONCAT('%', #{param.type}, '%')
+            </if>
+            <if test="param.websiteName != null">
+                AND a.website_name LIKE CONCAT('%', #{param.websiteName}, '%')
+            </if>
+            <if test="param.websiteCode != null">
+                AND a.website_code LIKE CONCAT('%', #{param.websiteCode}, '%')
+            </if>
+            <if test="param.websiteIcon != null">
+                AND a.website_icon LIKE CONCAT('%', #{param.websiteIcon}, '%')
+            </if>
+            <if test="param.websiteLogo != null">
+                AND a.website_logo LIKE CONCAT('%', #{param.websiteLogo}, '%')
+            </if>
+            <if test="param.websiteDarkLogo != null">
+                AND a.website_dark_logo LIKE CONCAT('%', #{param.websiteDarkLogo}, '%')
+            </if>
+            <if test="param.websiteType != null">
+                AND a.website_type LIKE CONCAT('%', #{param.websiteType}, '%')
+            </if>
+            <if test="param.prefix != null">
+                AND a.prefix LIKE CONCAT('%', #{param.prefix}, '%')
+            </if>
+            <if test="param.domain != null">
+                AND a.domain LIKE CONCAT('%', #{param.domain}, '%')
+            </if>
+            <if test="param.style != null">
+                AND a.style LIKE CONCAT('%', #{param.style}, '%')
+            </if>
+            <if test="param.adminUrl != null">
+                AND a.admin_url LIKE CONCAT('%', #{param.adminUrl}, '%')
+            </if>
+            <if test="param.version != null">
+                AND a.version = #{param.version}
+            </if>
+            <if test="param.expirationTime != null">
+                AND a.expiration_time LIKE CONCAT('%', #{param.expirationTime}, '%')
+            </if>
+            <if test="param.templateId != null">
+                AND a.template_id = #{param.templateId}
+            </if>
+            <if test="param.industryParent != null">
+                AND a.industry_parent LIKE CONCAT('%', #{param.industryParent}, '%')
+            </if>
+            <if test="param.industryChild != null">
+                AND a.industry_child LIKE CONCAT('%', #{param.industryChild}, '%')
+            </if>
+            <if test="param.categoryId != null">
+              AND a.category_id = #{param.categoryId}
+            </if>
+            <if test="param.companyId != null">
+                AND a.company_id = #{param.companyId}
+            </if>
+            <if test="param.country != null">
+                AND a.country LIKE CONCAT('%', #{param.country}, '%')
+            </if>
+            <if test="param.province != null">
+                AND a.province LIKE CONCAT('%', #{param.province}, '%')
+            </if>
+            <if test="param.city != null">
+                AND a.city LIKE CONCAT('%', #{param.city}, '%')
+            </if>
+            <if test="param.region != null">
+                AND a.region LIKE CONCAT('%', #{param.region}, '%')
+            </if>
+            <if test="param.longitude != null">
+                AND a.longitude LIKE CONCAT('%', #{param.longitude}, '%')
+            </if>
+            <if test="param.latitude != null">
+                AND a.latitude LIKE CONCAT('%', #{param.latitude}, '%')
+            </if>
+            <if test="param.address != null">
+                AND a.address LIKE CONCAT('%', #{param.address}, '%')
+            </if>
+            <if test="param.email != null">
+                AND a.email LIKE CONCAT('%', #{param.email}, '%')
+            </if>
+            <if test="param.icpNo != null">
+                AND a.icp_no LIKE CONCAT('%', #{param.icpNo}, '%')
+            </if>
+            <if test="param.policeNo != null">
+                AND a.police_no LIKE CONCAT('%', #{param.policeNo}, '%')
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.recommend != null">
+                AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.official != null">
+              AND a.official = #{param.official}
+            </if>
+            <if test="param.market != null">
+              AND a.market = #{param.market}
+            </if>
+            <if test="param.plugin != null">
+              AND a.plugin = #{param.plugin}
+            </if>
+            <if test="param.search != null">
+              AND a.search = #{param.search}
+            </if>
+            <if test="param.color != null">
+              AND a.color = #{param.color}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.statusText != null">
+                AND a.status_text LIKE CONCAT('%', #{param.statusText}, '%')
+            </if>
+            <if test="param.statusClose != null">
+                AND a.status_close LIKE CONCAT('%', #{param.statusClose}, '%')
+            </if>
+            <if test="param.styles != null">
+                AND a.styles LIKE CONCAT('%', #{param.styles}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.keywords != null">
+              AND (a.website_name LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.website_code LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.domain LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.tenant_id = #{param.keywords}
+              )
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsWebsite">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsWebsite">
+        <include refid="selectSql"></include>
+    </select>
+
+  <select id="getByIdRelAll" resultType="com.gxwebsoft.cms.entity.CmsWebsite">
+    SELECT a.*
+    FROM cms_website a
+    <where>
+      <if test="websiteId != null">
+        AND a.website_id = #{websiteId}
+      </if>
+    </where>
+  </select>
+
+
+  <select id="getByTenantId" resultType="com.gxwebsoft.cms.entity.CmsWebsite">
+    SELECT a.*
+    FROM cms_website a
+    <where>
+      <if test="tenantId != null">
+        AND a.tenant_id = #{tenantId}
+      </if>
+    LIMIT 1
+    </where>
+  </select>
+
+  <update id="updateByIdAll" parameterType="com.gxwebsoft.cms.entity.CmsWebsite">
+    UPDATE cms_website
+    <set>
+      <if test="param.type != null">
+        type = #{param.type},
+      </if>
+      <if test="param.websiteName != null">
+        website_name = #{param.websiteName},
+      </if>
+      <if test="param.websiteLogo != null">
+        website_logo = #{param.websiteLogo},
+      </if>
+      <if test="param.websiteCode != null">
+        website_code = #{param.websiteCode},
+      </if>
+      <if test="param.websiteType != null">
+        website_type = #{param.websiteType},
+      </if>
+      <if test="param.templateId != null">
+        template_id = #{param.templateId},
+      </if>
+      <if test="param.companyId != null">
+        company_id = #{param.companyId},
+      </if>
+      <if test="param.adminUrl != null">
+        admin_url = #{param.adminUrl},
+      </if>
+      <if test="param.running != null">
+        running = #{param.running},
+      </if>
+      <if test="param.domain != null">
+        domain = #{param.domain},
+      </if>
+      <if test="param.market != null">
+        market = #{param.market},
+      </if>
+      <if test="param.plugin != null">
+        plugin = #{param.plugin},
+      </if>
+      <if test="param.search != null">
+        `search` = #{param.search},
+      </if>
+      <if test="param.developer != null">
+        developer = #{param.developer},
+      </if>
+      <if test="param.color != null">
+        color = #{param.color},
+      </if>
+      <if test="param.recommend != null">
+        recommend = #{param.recommend},
+      </if>
+      <if test="param.official != null">
+        official = #{param.official},
+      </if>
+      <if test="param.prefix != null">
+        prefix = #{param.prefix},
+      </if>
+      <if test="param.version != null">
+        version = #{param.version},
+      </if>
+      <if test="param.files != null">
+        files = #{param.files},
+      </if>
+      <if test="param.price != null">
+        price = #{param.price},
+      </if>
+      <if test="param.deliveryMethod != null">
+        delivery_method = #{param.deliveryMethod},
+      </if>
+      <if test="param.chargingMethod != null">
+        charging_method = #{param.chargingMethod},
+      </if>
+      <if test="param.keywords != null">
+        keywords = #{param.keywords},
+      </if>
+      <if test="param.comments != null">
+        comments = #{param.comments},
+      </if>
+      <if test="param.content != null">
+        content = #{param.content},
+      </if>
+      <if test="param.deleted != null">
+        deleted = #{param.deleted},
+      </if>
+      <if test="param.deleted == null">
+        deleted = 0,
+      </if>
+    </set>
+    <where>
+      website_id = #{param.websiteId}
+    </where>
+  </update>
+
+  <!-- 分页查询全部 -->
+  <select id="selectPageRelAll" resultType="com.gxwebsoft.cms.entity.CmsWebsite">
+    SELECT a.*,b.app_id, u.phone as superAdminPhone
+    FROM cms_website a
+    LEFT JOIN project b ON a.website_id = b.website_id
+    LEFT JOIN gxwebsoft_core.sys_user u ON a.user_id = u.user_id
+    <where>
+      <if test="param.websiteId != null">
+        AND a.website_id = #{param.websiteId}
+      </if>
+      <if test="param.type != null">
+        AND a.type LIKE CONCAT('%', #{param.type}, '%')
+      </if>
+      <if test="param.websiteName != null">
+        AND a.website_name LIKE CONCAT('%', #{param.websiteName}, '%')
+      </if>
+      <if test="param.websiteCode != null">
+        AND a.website_code LIKE CONCAT('%', #{param.websiteCode}, '%')
+      </if>
+      <if test="param.websiteIcon != null">
+        AND a.website_icon LIKE CONCAT('%', #{param.websiteIcon}, '%')
+      </if>
+      <if test="param.websiteLogo != null">
+        AND a.website_logo LIKE CONCAT('%', #{param.websiteLogo}, '%')
+      </if>
+      <if test="param.websiteDarkLogo != null">
+        AND a.website_dark_logo LIKE CONCAT('%', #{param.websiteDarkLogo}, '%')
+      </if>
+      <if test="param.websiteType != null">
+        AND a.website_type LIKE CONCAT('%', #{param.websiteType}, '%')
+      </if>
+      <if test="param.prefix != null">
+        AND a.prefix LIKE CONCAT('%', #{param.prefix}, '%')
+      </if>
+      <if test="param.domain != null">
+        AND a.domain LIKE CONCAT('%', #{param.domain}, '%')
+      </if>
+      <if test="param.style != null">
+        AND a.style LIKE CONCAT('%', #{param.style}, '%')
+      </if>
+      <if test="param.adminUrl != null">
+        AND a.admin_url LIKE CONCAT('%', #{param.adminUrl}, '%')
+      </if>
+      <if test="param.adminPhone != null">
+        AND u.phone = #{param.adminPhone} AND u.is_admin = 1
+      </if>
+      <if test="param.version != null">
+        AND a.version = #{param.version}
+      </if>
+      <if test="param.expirationTime != null">
+        AND a.expiration_time LIKE CONCAT('%', #{param.expirationTime}, '%')
+      </if>
+      <if test="param.templateId != null">
+        AND a.template_id = #{param.templateId}
+      </if>
+      <if test="param.industryParent != null">
+        AND a.industry_parent LIKE CONCAT('%', #{param.industryParent}, '%')
+      </if>
+      <if test="param.industryChild != null">
+        AND a.industry_child LIKE CONCAT('%', #{param.industryChild}, '%')
+      </if>
+      <if test="param.categoryId != null">
+        AND a.category_id = #{param.categoryId}
+      </if>
+      <if test="param.companyId != null">
+        AND a.company_id = #{param.companyId}
+      </if>
+      <if test="param.country != null">
+        AND a.country LIKE CONCAT('%', #{param.country}, '%')
+      </if>
+      <if test="param.province != null">
+        AND a.province LIKE CONCAT('%', #{param.province}, '%')
+      </if>
+      <if test="param.city != null">
+        AND a.city LIKE CONCAT('%', #{param.city}, '%')
+      </if>
+      <if test="param.region != null">
+        AND a.region LIKE CONCAT('%', #{param.region}, '%')
+      </if>
+      <if test="param.longitude != null">
+        AND a.longitude LIKE CONCAT('%', #{param.longitude}, '%')
+      </if>
+      <if test="param.latitude != null">
+        AND a.latitude LIKE CONCAT('%', #{param.latitude}, '%')
+      </if>
+      <if test="param.address != null">
+        AND a.address LIKE CONCAT('%', #{param.address}, '%')
+      </if>
+      <if test="param.email != null">
+        AND a.email LIKE CONCAT('%', #{param.email}, '%')
+      </if>
+      <if test="param.icpNo != null">
+        AND a.icp_no LIKE CONCAT('%', #{param.icpNo}, '%')
+      </if>
+      <if test="param.policeNo != null">
+        AND a.police_no LIKE CONCAT('%', #{param.policeNo}, '%')
+      </if>
+      <if test="param.comments != null">
+        AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+      </if>
+      <if test="param.recommend != null">
+        AND a.recommend = #{param.recommend}
+      </if>
+      <if test="param.official != null">
+        AND a.official = #{param.official}
+      </if>
+      <if test="param.market != null">
+        AND a.market = #{param.market}
+      </if>
+      <if test="param.plugin != null">
+        AND a.plugin = #{param.plugin}
+      </if>
+      <if test="param.search != null">
+        AND a.search = #{param.search}
+      </if>
+      <if test="param.color != null">
+        AND a.color = #{param.color}
+      </if>
+      <if test="param.status != null">
+        AND a.status = #{param.status}
+      </if>
+      <if test="param.statusText != null">
+        AND a.status_text LIKE CONCAT('%', #{param.statusText}, '%')
+      </if>
+      <if test="param.statusClose != null">
+        AND a.status_close LIKE CONCAT('%', #{param.statusClose}, '%')
+      </if>
+      <if test="param.styles != null">
+        AND a.styles LIKE CONCAT('%', #{param.styles}, '%')
+      </if>
+      <if test="param.sortNumber != null">
+        AND a.sort_number = #{param.sortNumber}
+      </if>
+      <if test="param.userId != null">
+        AND a.user_id = #{param.userId}
+      </if>
+      <if test="param.userIds != null">
+        AND a.user_id IN
+        <foreach collection="param.userIds" item="item" separator="," open="(" close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="param.websiteIds != null">
+        AND a.website_id IN
+        <foreach collection="param.websiteIds" item="item" separator="," open="(" close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="param.keywords != null">
+        AND (a.website_name LIKE CONCAT('%', #{param.keywords}, '%')
+        OR a.website_code LIKE CONCAT('%', #{param.keywords}, '%')
+        OR a.domain LIKE CONCAT('%', #{param.keywords}, '%')
+        OR a.tenant_id = #{param.keywords}
+        )
+      </if>
+      <if test="param.deleted != null">
+        AND a.deleted = #{param.deleted}
+      </if>
+      <if test="param.deleted == null">
+        AND a.deleted = 0
+      </if>
+      <if test="param.createTimeStart != null">
+        AND a.create_time &gt;= #{param.createTimeStart}
+      </if>
+      <if test="param.createTimeEnd != null">
+        AND a.create_time &lt;= #{param.createTimeEnd}
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.common.system.mapper.CompanyGitMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM sys_company_git a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.title != null">
+                AND a.title LIKE CONCAT('%', #{param.title}, '%')
+            </if>
+            <if test="param.brand != null">
+                AND a.brand = #{param.brand}
+            </if>
+            <if test="param.companyId != null">
+                AND a.company_id = #{param.companyId}
+            </if>
+            <if test="param.domain != null">
+                AND a.domain LIKE CONCAT('%', #{param.domain}, '%')
+            </if>
+            <if test="param.account != null">
+                AND a.account LIKE CONCAT('%', #{param.account}, '%')
+            </if>
+            <if test="param.password != null">
+                AND a.password LIKE CONCAT('%', #{param.password}, '%')
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+              AND (
+              a.title LIKE CONCAT('%', #{param.keywords}, '%')
+              OR a.domain LIKE CONCAT('%', #{param.keywords}, '%')
+              )
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.common.system.entity.CompanyGit">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.common.system.entity.CompanyGit">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

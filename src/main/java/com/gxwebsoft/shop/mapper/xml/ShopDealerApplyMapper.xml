@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopDealerApplyMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_dealer_apply a
+        <where>
+            <if test="param.applyId != null">
+                AND a.apply_id = #{param.applyId}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.mobile != null">
+                AND a.mobile LIKE CONCAT('%', #{param.mobile}, '%')
+            </if>
+            <if test="param.refereeId != null">
+                AND a.referee_id = #{param.refereeId}
+            </if>
+            <if test="param.applyType != null">
+                AND a.apply_type = #{param.applyType}
+            </if>
+            <if test="param.applyTime != null">
+                AND a.apply_time = #{param.applyTime}
+            </if>
+            <if test="param.applyStatus != null">
+                AND a.apply_status = #{param.applyStatus}
+            </if>
+            <if test="param.auditTime != null">
+                AND a.audit_time = #{param.auditTime}
+            </if>
+            <if test="param.rejectReason != null">
+                AND a.reject_reason LIKE CONCAT('%', #{param.rejectReason}, '%')
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopDealerApply">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopDealerApply">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

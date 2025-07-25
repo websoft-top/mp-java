@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopOrderInfoMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_order_info a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.orderId != null">
+                AND a.order_id = #{param.orderId}
+            </if>
+            <if test="param.orderCode != null">
+                AND a.order_code LIKE CONCAT('%', #{param.orderCode}, '%')
+            </if>
+            <if test="param.merchantId != null">
+                AND a.merchant_id = #{param.merchantId}
+            </if>
+            <if test="param.merchantName != null">
+                AND a.merchant_name LIKE CONCAT('%', #{param.merchantName}, '%')
+            </if>
+            <if test="param.fieldId != null">
+                AND a.field_id = #{param.fieldId}
+            </if>
+            <if test="param.fieldName != null">
+                AND a.field_name LIKE CONCAT('%', #{param.fieldName}, '%')
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.childrenPrice != null">
+                AND a.children_price = #{param.childrenPrice}
+            </if>
+            <if test="param.adultNum != null">
+                AND a.adult_num = #{param.adultNum}
+            </if>
+            <if test="param.childrenNum != null">
+                AND a.children_num = #{param.childrenNum}
+            </if>
+            <if test="param.adultNumUse != null">
+                AND a.adult_num_use = #{param.adultNumUse}
+            </if>
+            <if test="param.childrenNumUse != null">
+                AND a.children_num_use = #{param.childrenNumUse}
+            </if>
+            <if test="param.payStatus != null">
+                AND a.pay_status = #{param.payStatus}
+            </if>
+            <if test="param.orderStatus != null">
+                AND a.order_status = #{param.orderStatus}
+            </if>
+            <if test="param.isFree != null">
+                AND a.is_free = #{param.isFree}
+            </if>
+            <if test="param.isChildren != null">
+                AND a.is_children = #{param.isChildren}
+            </if>
+            <if test="param.version != null">
+                AND a.version = #{param.version}
+            </if>
+            <if test="param.isHalf != null">
+                AND a.is_half = #{param.isHalf}
+            </if>
+            <if test="param.timePeriod != null">
+                AND a.time_period LIKE CONCAT('%', #{param.timePeriod}, '%')
+            </if>
+            <if test="param.dateTime != null">
+                AND a.date_time LIKE CONCAT('%', #{param.dateTime}, '%')
+            </if>
+            <if test="param.startTime != null">
+                AND a.start_time LIKE CONCAT('%', #{param.startTime}, '%')
+            </if>
+            <if test="param.endTime != null">
+                AND a.end_time LIKE CONCAT('%', #{param.endTime}, '%')
+            </if>
+            <if test="param.timeFlag != null">
+                AND a.time_flag LIKE CONCAT('%', #{param.timeFlag}, '%')
+            </if>
+            <if test="param.expirationTime != null">
+                AND a.expiration_time LIKE CONCAT('%', #{param.expirationTime}, '%')
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopOrderInfo">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopOrderInfo">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopDealerUserMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_dealer_user a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.realName != null">
+                AND a.real_name LIKE CONCAT('%', #{param.realName}, '%')
+            </if>
+            <if test="param.mobile != null">
+                AND a.mobile LIKE CONCAT('%', #{param.mobile}, '%')
+            </if>
+            <if test="param.payPassword != null">
+                AND a.pay_password LIKE CONCAT('%', #{param.payPassword}, '%')
+            </if>
+            <if test="param.money != null">
+                AND a.money = #{param.money}
+            </if>
+            <if test="param.freezeMoney != null">
+                AND a.freeze_money = #{param.freezeMoney}
+            </if>
+            <if test="param.totalMoney != null">
+                AND a.total_money = #{param.totalMoney}
+            </if>
+            <if test="param.refereeId != null">
+                AND a.referee_id = #{param.refereeId}
+            </if>
+            <if test="param.firstNum != null">
+                AND a.first_num = #{param.firstNum}
+            </if>
+            <if test="param.secondNum != null">
+                AND a.second_num = #{param.secondNum}
+            </if>
+            <if test="param.thirdNum != null">
+                AND a.third_num = #{param.thirdNum}
+            </if>
+            <if test="param.qrcode != null">
+                AND a.qrcode LIKE CONCAT('%', #{param.qrcode}, '%')
+            </if>
+            <if test="param.isDelete != null">
+                AND a.is_delete = #{param.isDelete}
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopDealerUser">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopDealerUser">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.shop.mapper.ShopGoodsMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM shop_goods a
+        <where>
+            <if test="param.goodsId != null">
+                AND a.goods_id = #{param.goodsId}
+            </if>
+            <if test="param.name != null">
+                AND a.name LIKE CONCAT('%', #{param.name}, '%')
+            </if>
+            <if test="param.code != null">
+                AND a.code LIKE CONCAT('%', #{param.code}, '%')
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.parentId != null">
+                AND a.parent_id = #{param.parentId}
+            </if>
+            <if test="param.categoryId != null">
+                AND a.category_id = #{param.categoryId}
+            </if>
+            <if test="param.path != null">
+                AND a.path LIKE CONCAT('%', #{param.path}, '%')
+            </if>
+            <if test="param.tag != null">
+                AND a.tag LIKE CONCAT('%', #{param.tag}, '%')
+            </if>
+            <if test="param.specs != null">
+                AND a.specs = #{param.specs}
+            </if>
+            <if test="param.position != null">
+                AND a.position LIKE CONCAT('%', #{param.position}, '%')
+            </if>
+            <if test="param.unitName != null">
+                AND a.unit_name LIKE CONCAT('%', #{param.unitName}, '%')
+            </if>
+            <if test="param.price != null">
+                AND a.price = #{param.price}
+            </if>
+            <if test="param.buyingPrice != null">
+                AND a.buying_price = #{param.buyingPrice}
+            </if>
+            <if test="param.dealerPrice != null">
+                AND a.dealer_price = #{param.dealerPrice}
+            </if>
+            <if test="param.deductStockType != null">
+                AND a.deduct_stock_type = #{param.deductStockType}
+            </if>
+            <if test="param.deliveryMethod != null">
+                AND a.delivery_method = #{param.deliveryMethod}
+            </if>
+            <if test="param.durationMethod != null">
+                AND a.duration_method = #{param.durationMethod}
+            </if>
+            <if test="param.canBuyNumber != null">
+                AND a.can_buy_number = #{param.canBuyNumber}
+            </if>
+            <if test="param.files != null">
+                AND a.files LIKE CONCAT('%', #{param.files}, '%')
+            </if>
+            <if test="param.sales != null">
+                AND a.sales = #{param.sales}
+            </if>
+            <if test="param.stock != null">
+                AND a.stock = #{param.stock}
+            </if>
+            <if test="param.install != null">
+                AND a.install = #{param.install}
+            </if>
+            <if test="param.rate != null">
+                AND a.rate = #{param.rate}
+            </if>
+            <if test="param.gainIntegral != null">
+                AND a.gain_integral = #{param.gainIntegral}
+            </if>
+            <if test="param.recommend != null">
+                AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.official != null">
+                AND a.official = #{param.official}
+            </if>
+            <if test="param.merchantId != null">
+                AND a.merchant_id = #{param.merchantId}
+            </if>
+            <if test="param.isShow != null">
+                AND a.is_show = #{param.isShow}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.sceneType != null">
+              <if test="param.sceneType == 'on_sale'">
+                AND a.status = 0
+              </if>
+              <if test="param.sceneType == 'pending'">
+                AND a.status != 0
+              </if>
+              <if test="param.sceneType == 'sold_out'">
+                AND a.stock = 0
+              </if>
+            </if>
+            <if test="param.keywords != null">
+                AND (a.comments LIKE CONCAT('%', #{param.keywords}, '%')
+                )
+              </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.shop.entity.ShopGoods">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.shop.entity.ShopGoods">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

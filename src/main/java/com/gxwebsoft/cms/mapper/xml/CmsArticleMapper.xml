@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxwebsoft.cms.mapper.CmsArticleMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*,b.title as categoryName,b.parent_Id as parentId, b.model,c.title as parentName,u.nickname,u.avatar
+        FROM cms_article a
+        LEFT JOIN cms_navigation b ON a.category_id = b.navigation_id
+        LEFT JOIN cms_navigation c ON b.parent_id = c.navigation_id
+        LEFT JOIN gxwebsoft_core.sys_user u ON a.user_id = u.user_id
+      <where>
+            <if test="param.articleId != null">
+                AND a.article_id = #{param.articleId}
+            </if>
+            <if test="param.title != null">
+                AND a.title LIKE CONCAT('%', #{param.title}, '%')
+            </if>
+            <if test="param.type != null">
+                AND a.type = #{param.type}
+            </if>
+            <if test="param.lang != null">
+              AND a.lang = #{param.lang}
+            </if>
+            <if test="param.model != null">
+                AND a.model = #{param.model}
+            </if>
+            <if test="param.detail != null">
+              AND a.detail = #{param.detail}
+            </if>
+            <if test="param.showType != null">
+                AND a.show_type = #{param.showType}
+            </if>
+            <if test="param.topic != null">
+                AND a.topic LIKE CONCAT('%', #{param.topic}, '%')
+            </if>
+            <if test="param.categoryId != null">
+                AND a.category_id = #{param.categoryId}
+            </if>
+            <if test="param.categoryIds != null">
+              AND a.category_id IN
+              <foreach collection="param.categoryIds" item="item" separator="," open="(" close=")">
+                #{item}
+              </foreach>
+            </if>
+            <if test="param.image != null">
+                AND a.image LIKE CONCAT('%', #{param.image}, '%')
+            </if>
+            <if test="param.hasImage != null">
+              AND a.image != ''
+            </if>
+            <if test="param.source != null">
+                AND a.source LIKE CONCAT('%', #{param.source}, '%')
+            </if>
+            <if test="param.virtualViews != null">
+                AND a.virtual_views = #{param.virtualViews}
+            </if>
+            <if test="param.actualViews != null">
+                AND a.actual_views = #{param.actualViews}
+            </if>
+            <if test="param.platform != null">
+                AND a.platform LIKE CONCAT('%', #{param.platform}, '%')
+            </if>
+            <if test="param.files != null">
+                AND a.files LIKE CONCAT('%', #{param.files}, '%')
+            </if>
+            <if test="param.video != null">
+                AND a.video LIKE CONCAT('%', #{param.video}, '%')
+            </if>
+            <if test="param.accept != null">
+                AND a.accept LIKE CONCAT('%', #{param.accept}, '%')
+            </if>
+            <if test="param.longitude != null">
+                AND a.longitude LIKE CONCAT('%', #{param.longitude}, '%')
+            </if>
+            <if test="param.latitude != null">
+                AND a.latitude LIKE CONCAT('%', #{param.latitude}, '%')
+            </if>
+            <if test="param.province != null">
+                AND a.province LIKE CONCAT('%', #{param.province}, '%')
+            </if>
+            <if test="param.city != null">
+                AND a.city LIKE CONCAT('%', #{param.city}, '%')
+            </if>
+            <if test="param.region != null">
+                AND a.region LIKE CONCAT('%', #{param.region}, '%')
+            </if>
+            <if test="param.address != null">
+                AND a.address LIKE CONCAT('%', #{param.address}, '%')
+            </if>
+            <if test="param.likes != null">
+                AND a.likes = #{param.likes}
+            </if>
+            <if test="param.commentNumbers != null">
+                AND a.comment_numbers = #{param.commentNumbers}
+            </if>
+            <if test="param.toUsers != null">
+                AND a.to_users LIKE CONCAT('%', #{param.toUsers}, '%')
+            </if>
+            <if test="param.userId != null">
+                AND a.user_id = #{param.userId}
+            </if>
+            <if test="param.projectId != null">
+              AND a.project_id = #{param.projectId}
+            </if>
+            <if test="param.tags != null">
+              AND a.tags LIKE CONCAT('%', #{param.tags}, '%')
+            </if>
+            <if test="param.sortNumber != null">
+                AND a.sort_number = #{param.sortNumber}
+            </if>
+            <if test="param.comments != null">
+                AND a.comments LIKE CONCAT('%', #{param.comments}, '%')
+            </if>
+            <if test="param.recommend != null">
+              AND a.recommend = #{param.recommend}
+            </if>
+            <if test="param.status != null">
+                AND a.status = #{param.status}
+            </if>
+            <if test="param.deleted != null">
+                AND a.deleted = #{param.deleted}
+            </if>
+            <if test="param.deleted == null">
+                AND a.deleted = 0
+            </if>
+            <if test="param.createTimeStart != null">
+                AND a.create_time &gt;= #{param.createTimeStart}
+            </if>
+            <if test="param.createTimeEnd != null">
+                AND a.create_time &lt;= #{param.createTimeEnd}
+            </if>
+            <if test="param.articleIds != null">
+              AND a.article_id IN
+              <foreach collection="param.articleIds" item="item" separator="," open="(" close=")">
+                #{item}
+              </foreach>
+            </if>
+            <if test="param.keywords != null">
+              AND (a.comments  LIKE CONCAT('%', #{param.keywords}, '%')
+                OR a.article_id = #{param.keywords}
+                OR a.detail = #{param.keywords}
+                OR a.title LIKE CONCAT('%', #{param.keywords}, '%')
+              )
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.gxwebsoft.cms.entity.CmsArticle">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.gxwebsoft.cms.entity.CmsArticle">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="selectListAllRel" resultType="com.gxwebsoft.cms.entity.CmsArticle">
+      SELECT a.*,b.user_id as websiteUserId, c.content
+      FROM cms_article a
+      LEFT JOIN cms_website b ON a.tenant_id = b.tenant_id
+      LEFT JOIN cms_article_content c ON a.article_id = c.article_id
+      <where>
+        <if test="param.websiteUserId != null">
+          AND b.user_id = #{param.websiteUserId}
+        </if>
+        websiteId
+        <if test="param.parentId != null">
+          AND a.parent_id = #{param.parentId}
+        </if>
+        <if test="param.categoryId != null">
+          AND a.category_id = #{param.categoryId}
+        </if>
+        <if test="param.deleted != null">
+          AND a.deleted = #{param.deleted}
+        </if>
+        <if test="param.deleted == null">
+          AND a.deleted = 0
+        </if>
+      </where>
+    </select>
+
+</mapper>
